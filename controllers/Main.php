@@ -126,11 +126,14 @@ Class Main extends App {
 	}	
 	
 	function __DudeWheresMyCar() {
+		echo "\n" . '404' . "\n";
+/*
 		header('HTTP/1.0 404 Not Found');
 		
 		return $this->libs->Template->set(array(
 			'title' => '404 Error',
 			'content' => T::get('parts/common/404'),
 		))->render('bases/default');
+*/
 	}
 }
