@@ -2,15 +2,7 @@
 
 Class Main extends App {
 
-	static $urlPattern = array(
-		'/lookups\/?(.*)/' => array('Lookup'),
-		'/users\/?(.*)/' => array('Users'),
-		'/groups\/?(.*)/' => array('Groups'),
-		'/table\/?(.*)/' => array('Table'),
-		'/crud\/?(.*)/' => array('Crud'),
-		'/event-update\/?(.*)/' => 'eventUpdate',
-		'/machine-shop\/?(.*)/' => 'machineShop'
-	);
+	static $urlPattern = array();
 
 	function __construct() {
 		$this->lib(array('Uri', 'databases/Query'));
@@ -20,9 +12,26 @@ Class Main extends App {
 		echo 'index';
 		
 	}
+
+    function migrate() {
+        $this->lib('Migrate');
+        switch($this->libs->Uri->get(1)) {
+            case 'up':
+                $this->libs->Migrate->up();
+            case 'down':
+                $this->libs->Migrate->down();
+            case 'till':
+                if(isEmpty($till = $this->libs->Uri->get(2))) {
+                    return 'When using `till` you must specify a Migration Name or Num';
+                }
+                $this->libs->Migrate->till($till);
+            default:
+                return 'Must specify `up`, `down` or `till <MigrationNameOrNum>`';
+        }
+        return 'Migration Complete. Now currently on ' . $this->libs->Migrate->getName();
+    }
 	
 	function model() {
-		echo "\n";
 		//echo $this->libs->Uri->get(1);
 		
 		$this->helper('inflector');
