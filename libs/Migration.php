@@ -1,7 +1,10 @@
 <?
+// Not really doing much this class is.
 class Migration extends App {
-    function __sweetConstruct() {
+    var $Query;
+
+    public function __sweetConstruct() {
         $this->Query = $this->lib('databases/Query');
-        $this->Util = $this->lib('dbUtil');
+        //$this->Util = $this->lib('dbUtil');
     }
 }

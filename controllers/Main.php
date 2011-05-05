@@ -8,27 +8,66 @@ Class Main extends App {
 		$this->lib(array('Uri', 'databases/Query'));
 	}
 
+    function _hello() {
+        static $ran = false;
+        if(!$ran) {
+            $ran = true;
+            echo "\n\n-=-=-=-=-=-=-=-=-=-=-Sweet-Cmd-=-=-=-=-=-=-=-=-=-=-\n";
+        }
+    }
+
 	function index() {
-		echo 'index';
-		
+        $this->_hello();
+		echo 'Commands';
+        //echo "\n - backup <dbname>";
+        echo "\n - backup";
+        echo "\n - migrate <status|up|down|till <name>>";
+        echo "\n - model build <tableName>";
+        echo "\n";
 	}
 
+    function backup($currentDb=null) {
+        $this->_hello();
+        $this->lib(array('databases/Databases', 'dbUtil'));
+        //if(!isset($currentDb) && isEmpty($currentDb = $this->libs->Uri->get(1))) {
+            $currentDb = $this->libs->Databases->currentDatabase;
+        //}
+        $dbConfig = $this->lib('Config')->get('databases', $currentDb);
+        echo 'Backing up ' . $currentDb . '-' . $dbConfig['host'] . ' database ' . $dbConfig['username'] . '@' . $dbConfig['host'];
+        echo "\n";
+        $this->libs->dbUtil->backup($currentDb);
+        echo "\n";
+        echo 'Done';
+        echo "\n";
+    }
+
     function migrate() {
+        $this->_hello();
         $this->lib('Migrate');
+            
         switch($this->libs->Uri->get(1)) {
+            case 'status':
+                return 'Currently on ' . $this->libs->Migrate->getName() . "\n";
+                break;
             case 'up':
+                $this->backup();
                 $this->libs->Migrate->up();
+                break;
             case 'down':
+                $this->backup();
                 $this->libs->Migrate->down();
+                break;
             case 'till':
                 if(isEmpty($till = $this->libs->Uri->get(2))) {
                     return 'When using `till` you must specify a Migration Name or Num';
                 }
+                $this->backup();
                 $this->libs->Migrate->till($till);
+                break;
             default:
                 return 'Must specify `up`, `down` or `till <MigrationNameOrNum>`';
         }
-        return 'Migration Complete. Now currently on ' . $this->libs->Migrate->getName();
+        return 'Migration Complete. Now currently on ' . $this->libs->Migrate->getName() . "\n";
     }
 	
 	function model() {
@@ -135,7 +174,9 @@ Class Main extends App {
 	}	
 	
 	function __DudeWheresMyCar() {
-		echo "\n" . '404' . "\n";
+        $this->_hello();
+		echo '404 Command Not Found' . "\n";
+        return $this->index();
 /*
 		header('HTTP/1.0 404 Not Found');
 		

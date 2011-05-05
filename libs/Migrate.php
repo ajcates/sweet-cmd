@@ -4,7 +4,7 @@ class Migrate extends App {
     var $_current = null;
 
     var $_config = array(
-        'folder' => 'resources/migrations/'
+        'folder' => '/resources/migrations/'
     );
 
     function __construct() {
@@ -37,10 +37,10 @@ class Migrate extends App {
     }
 
     function findMigrations() {
-        $this->migrations = f_flatten(array_map(function($file) {
-            $fileNameParts = explode('_', substr(0, -4, $file));
-            return array(f_first($fileNameParts) => f_last($fileNameParts)); 
-        }, glob($this->_config['folder'] . '*.php')));
+        foreach(glob($this->_config['folder'] . '*.php') as $file) {
+            $fileNameParts = explode('_', substr(f_last(explode('/', $file)), 0, -4));
+            $this->migrations[f_first($fileNameParts)] = f_last($fileNameParts); 
+        }
         return $this;
     }
 
@@ -50,14 +50,14 @@ class Migrate extends App {
         } else {
             $num = array_search($name = $nameOrNum, $this->migrations);
         }
-        require_once($num . '_' . $name);
+        require_once($this->_config['folder'] . $num . '_' . $name . '.php');
         return array($num, new $name());
         //return new $name();
     }
 
     function run($nameOrNum, $dir) {
         f_last(
-            $migration = $this->getMigration($nameOrNum)
+            $migration = $this->getMigration(trim($nameOrNum))
         )->$dir();
         $this->setCurrent(f_first($migration), $dir);
         return $this;
@@ -68,7 +68,7 @@ class Migrate extends App {
             $num--;
         }
         //@todo hook this into the SweetFramework->end() event
-        file_put_contents($this->_current = $num, $this->_config['folder'] . 'current');
+        file_put_contents($this->_config['folder'] . 'current', $this->_current = $num);
         return $num;
     }
 
