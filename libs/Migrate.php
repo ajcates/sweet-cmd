@@ -85,6 +85,7 @@ class Migrate extends App {
         if(!isset($num)) {
             $num = $this->getCurrent();
         }
+        $num = intval($num);
         return $this->migrations[$num];
     }
 }
