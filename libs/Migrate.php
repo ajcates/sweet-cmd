@@ -67,6 +67,7 @@ class Migrate extends App {
         if($dir == 'down') {
             $num--;
         }
+        $num = intval($num);
         //@todo hook this into the SweetFramework->end() event
         if(file_put_contents($this->_config['folder'] . 'current', ($this->_current = $num)) === false) {
             D::error('Couldn\'t write to the current file in the migrations folder');
