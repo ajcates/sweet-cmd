@@ -3,7 +3,7 @@ class dbUtil extends App {
     var $_dbConfig;
 
     var $_config = array(
-        'backupFolder' => 'resources/migrations/backups/'
+        'backupFolder' => 'migrations/backups/'
     );
 
     function __construct() {

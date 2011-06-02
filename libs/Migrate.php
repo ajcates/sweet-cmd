@@ -4,7 +4,7 @@ class Migrate extends App {
     var $_current = null;
 
     var $_config = array(
-        'folder' => '/resources/migrations/'
+        'folder' => '/migrations/'
     );
 
     function __construct() {
@@ -87,6 +87,6 @@ class Migrate extends App {
             $num = $this->getCurrent();
         }
         $num = intval($num);
-        return $this->migrations[$num];
+        return isset($this->migrations[$num]) ? $this->migrations[$num] : 'Nothing. Use `migrate up` to get on something.';
     }
 }

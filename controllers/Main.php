@@ -12,7 +12,7 @@ Class Main extends App {
         static $ran = false;
         if(!$ran) {
             $ran = true;
-            echo "\n\n-=-=-=-=-=-=-=-=-=-=-Sweet-Cmd-=-=-=-=-=-=-=-=-=-=-\n";
+            echo "\n-=-=-=-=-=-=-=-=-=-=-Sweet-Cmd-=-=-=-=-=-=-=-=-=-=-\n";
         }
     }
 
@@ -21,7 +21,7 @@ Class Main extends App {
 		echo 'Commands';
         //echo "\n - backup <dbname>";
         echo "\n - backup";
-        echo "\n - migrate <status|up|down|till <name>>";
+        echo "\n - migrate <status|up|down|till> <name>";
         echo "\n - model build <tableName>";
         echo "\n";
 	}
