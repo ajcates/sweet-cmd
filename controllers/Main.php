@@ -8,13 +8,13 @@ Class Main extends App {
 		$this->lib(array('Uri', 'databases/Query'));
 	}
 
-    function _hello() {
-        static $ran = false;
-        if(!$ran) {
-            $ran = true;
-            echo "\n-=-=-=-=-=-=-=-=-=-=-Sweet-Cmd-=-=-=-=-=-=-=-=-=-=-\n";
-        }
+  function _hello() {
+    static $ran = false;
+    if(!$ran) {
+      $ran = true;
+      echo "\n-=-=-=-=-=-=-=-=-=-=-Sweet-Cmd-=-=-=-=-=-=-=-=-=-=-\n";
     }
+  }
 
 	function index() {
         $this->_hello();
