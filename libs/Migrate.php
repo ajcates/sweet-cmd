@@ -8,6 +8,7 @@ class Migrate extends App {
     );
 
     function __construct() {
+        //@todo make this pull from a config file
         $this->_config['folder'] = LOC . $this->_config['folder'];
         $this->findMigrations();
         $this->lib('Migration');
