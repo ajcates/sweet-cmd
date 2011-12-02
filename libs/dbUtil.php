@@ -7,7 +7,7 @@ class dbUtil extends App {
     );
 
     function __construct() {
-        $this->_dbConfig = $this->lib('Config')->get('databases');
+        $this->_dbConfig = Config::get('databases');
         $this->_config['backupFolder'] = $this->_config['backupFolder'];
     }
 

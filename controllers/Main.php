@@ -32,7 +32,7 @@ Class Main extends App {
         //if(!isset($currentDb) && isEmpty($currentDb = $this->libs->Uri->get(1))) {
             $currentDb = $this->libs->Databases->currentDatabase;
         //}
-        $dbConfig = $this->lib('Config')->get('databases', $currentDb);
+        $dbConfig = Config::get('databases', $currentDb);
         echo 'Backing up ' . $currentDb . '-' . $dbConfig['host'] . ' database ' . $dbConfig['username'] . '@' . $dbConfig['host'];
         echo "\n";
         $this->libs->dbUtil->backup($currentDb);

@@ -1,5 +1,5 @@
 <?php
-SweetFramework::getClass('lib', 'Config')->setAll('site', array(
+Config::setAll('site', array(
 	'name' => 'Sweet-Cmd',
 	'tagline' => 'commands so sweet you\'ll want to eat them.',
 	'prettyUrls' => false,
